@@ -7,12 +7,18 @@ import android.os.Handler
 import android.widget.Toast
 import com.example.sos__vn.R
 import com.example.sos__vn.utils.AppUtils
+import com.example.sos__vn.utils.DataLocalManager
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        loadData()
+        if (!DataLocalManager.getFirstInstall()) {
+            DataLocalManager.setFirst(true)
+            Toast.makeText(this, "FirstInstall", Toast.LENGTH_LONG).show()
+        } else {
+            loadData()
+        }
     }
 
     private fun loadData() {
