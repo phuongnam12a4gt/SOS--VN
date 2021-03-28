@@ -3,6 +3,7 @@
     package="com.example.sos__vn">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".utils.MyApplication"
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOSVN">
-        <activity android:name=".screen.HomeActivity"></activity>
+        <activity android:name=".screen.OnBoardingActivity"></activity>
+        <activity android:name=".screen.HomeActivity" />
         <activity android:name=".screen.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -15,13 +15,14 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         if (!DataLocalManager.getFirstInstall()) {
             DataLocalManager.setFirst(true)
-            Toast.makeText(this, "FirstInstall", Toast.LENGTH_LONG).show()
+            var intent = Intent(this@SplashActivity, OnBoardingActivity::class.java)
+            startActivity(intent)
         } else {
             loadData()
         }
     }
 
-    private fun loadData() {
+     fun loadData() {
         if (AppUtils.isNetWorkAvailable(this)) {
             Handler().postDelayed(object : Runnable {
                 override fun run() {

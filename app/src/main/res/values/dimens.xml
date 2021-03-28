@@ -4,4 +4,6 @@
     <dimen name="dp_20">20sp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_30">30dp</dimen>
+    <dimen name="sp_40">40sp</dimen>
+    <dimen name="sp_10">10sp</dimen>
 </resources>
