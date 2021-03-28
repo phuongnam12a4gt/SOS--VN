@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_la"
+    tools:context=".screen.SplashActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidLineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCar"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="100dp"
+        android:background="@color/green_la"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_car"
+        app:layout_constraintBottom_toBottomOf="@id/guidLineHorizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewNameApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textsosvn"
+        android:textColor="@color/red_5"
+        android:textSize="@dimen/dp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidLineHorizontal" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCall"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/green_la"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNameApp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSearch"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/green_la"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_search"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonCall"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNameApp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonModify"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/green_la"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_modify"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonCall"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNameApp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLoadData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
