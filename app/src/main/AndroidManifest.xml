@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOSVN">
-        <activity android:name=".screen.Register.Register"/>
+        <activity android:name=".screen.Register.NavigateActivity"/>
         <activity android:name=".screen.OnBoardingActivity" />
         <activity android:name=".screen.HomeActivity" />
         <activity android:name=".screen.SplashActivity">

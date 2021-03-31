@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import com.example.sos__vn.R
-import com.example.sos__vn.screen.Register.Register
+import com.example.sos__vn.screen.Register.NavigateActivity
 import com.example.sos__vn.utils.AppUtils
 import com.example.sos__vn.utils.DataLocalManager
 
@@ -27,11 +27,10 @@ class SplashActivity : AppCompatActivity() {
         if (AppUtils.isNetWorkAvailable(this)) {
             Handler().postDelayed(object : Runnable {
                 override fun run() {
-                    var intent = Intent(this@SplashActivity, Register::class.java)
+                    var intent = Intent(this@SplashActivity, NavigateActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-
             }, 3000)
             Toast.makeText(this, "NetWork Connect ", Toast.LENGTH_LONG).show()
         } else {
