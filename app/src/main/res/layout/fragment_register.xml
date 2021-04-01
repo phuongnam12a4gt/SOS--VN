@@ -12,6 +12,7 @@
         android:id="@+id/textViewTitlePerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font2"
         android:text="@string/person"
         android:textSize="@dimen/sp_40"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,4 +102,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/select_service"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintStart_toStartOf="@+id/textInputNumberPhoneLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputNumberPhoneLayout" />
+
+    <Spinner
+        android:id="@+id/spinnerService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@id/textInputNumberPhoneLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputNumberPhoneLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSelectLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewService">
+
+        <Button
+            android:id="@+id/buttonSelectLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:text="@string/select_location" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutSelectLocation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

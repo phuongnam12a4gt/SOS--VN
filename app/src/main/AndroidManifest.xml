@@ -3,6 +3,8 @@
     package="com.example.sos__vn">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".utils.MyApplication"
@@ -12,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOSVN">
-        <activity android:name=".screen.Register.NavigateActivity"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAAlmqP_oCSJ1fD5PVfEJEScm0iUgoJFzI" />
+
+        <activity android:name=".screen.Register.NavigateActivity" />
         <activity android:name=".screen.OnBoardingActivity" />
         <activity android:name=".screen.HomeActivity" />
         <activity android:name=".screen.SplashActivity">
