@@ -22,4 +22,10 @@
     <string name="remember_me">Remember Me?</string>
     <string name="not_account">Don\'t have a account ?</string>
     <string name="register">Register</string>
+    <string name="person">Person</string>
+    <string name="username">UserName</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="input_address">Input Address</string>
+    <string name="enter_numberphone">Enter NumberPhone</string>
+    <string name="input_numberphone">InputNumberHome</string>
 </resources>
