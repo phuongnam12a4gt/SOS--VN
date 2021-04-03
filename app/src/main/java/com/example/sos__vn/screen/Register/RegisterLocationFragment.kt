@@ -1,11 +1,15 @@
 package com.example.sos__vn.screen.Register
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.sos__vn.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -17,18 +21,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.net.PlacesClient
 
 class RegisterLocationFragment : Fragment(),
     OnMapReadyCallback,
     GoogleMap.OnMarkerDragListener {
 
+    private var placesClient: PlacesClient? = null
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
-    private var mGeoDataClient = null
+    private var locationPermissionGranted: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Construct a FusedLocationProviderClient.
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
+        initData()
     }
 
     override fun onCreateView(
@@ -46,18 +51,74 @@ class RegisterLocationFragment : Fragment(),
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        p0?.let {
-            val perthLocation = LatLng(-30.1, 120.86)
-            val perth = p0.addMarker(
-                MarkerOptions()
-                    .position(perthLocation)
-                    .draggable(true)
-                    .title("Melbourne")
-                    .snippet("Population: 4,137,400")
+        getLocationPermission()
+        p0?.let { getDeviceLocation(p0) }
+    }
+
+    private fun initData() {
+        activity?.applicationContext?.let {
+            Places.initialize(
+                it,
+                getString(R.string.google_maps_key)
             )
-            p0.moveCamera(CameraUpdateFactory.newLatLng(perthLocation))
-            perth.isDraggable = true
-            p0.setOnMarkerDragListener(this)
+        }
+        placesClient = activity?.let { Places.createClient(it) }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
+    }
+
+    private fun getLocationPermission() {
+        if (activity?.applicationContext?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            }
+            == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true
+        } else {
+            activity?.let {
+                ActivityCompat.requestPermissions(
+                    it, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                )
+            }
+        }
+    }
+
+    private fun getDeviceLocation(map: GoogleMap) {
+        map.mapType=GoogleMap.MAP_TYPE_HYBRID
+        try {
+            if (locationPermissionGranted) {
+                val locationResult = fusedLocationProviderClient?.lastLocation
+                locationResult?.let { task ->
+                    task.addOnCompleteListener {
+                        it?.let {
+                            if (it.isSuccessful) {
+                                var location = it.result
+                                var currentPostion = LatLng(
+                                    location.latitude,
+                                    location.longitude
+                                )
+                                map.addMarker(
+                                    MarkerOptions()
+                                        .position(currentPostion)
+                                        .draggable(true)
+                                        .title("Postion")
+                                        .snippet("Select postion services")
+                                )
+                                map?.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        currentPostion, DEFAULT_ZOOM.toFloat()
+                                    )
+                                )
+                                map.setOnMarkerDragListener(this)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Log.i("TAG", e.toString())
         }
     }
 
@@ -74,6 +135,10 @@ class RegisterLocationFragment : Fragment(),
     }
 
     companion object {
+
+        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        private const val DEFAULT_ZOOM = 20
+
         fun newInstance() = RegisterLocationFragment()
     }
 }
