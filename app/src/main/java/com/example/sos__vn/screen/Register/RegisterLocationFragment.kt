@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.sos__vn.R
+import com.example.sos__vn.model.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -36,6 +38,7 @@ class RegisterLocationFragment : Fragment(),
     private var placesClient: PlacesClient? = null
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var locationPermissionGranted: Boolean = false
+    private val listLocationSelect = mutableListOf<Location>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +64,7 @@ class RegisterLocationFragment : Fragment(),
         searchViewFindAddress.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
+                    map?.clear()
                     var location = searchViewFindAddress.query.toString()
                     var listAdress = mutableListOf<Address>()
                     if (location != null) {
@@ -68,10 +72,15 @@ class RegisterLocationFragment : Fragment(),
                         try {
                             listAdress = geo.getFromLocationName(location, 1)
                             var address = listAdress.get(0)
+                            listLocationSelect.clear()
+                            listLocationSelect.add(Location(address.latitude, address.longitude))
                             var latlng = LatLng(address.latitude, address.longitude)
-                            map?.addMarker(MarkerOptions().position(latlng).title("${location}"))
-                            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 20f))
-
+                            map?.addMarker(
+                                MarkerOptions().position(latlng).title("${location}")
+                                    .draggable(true)
+                            )
+                            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 15f))
+                            map?.setOnMarkerDragListener(this@RegisterLocationFragment)
                         } catch (e: Exception) {
                             Log.i("TAG", e.toString())
                         }
@@ -82,9 +91,14 @@ class RegisterLocationFragment : Fragment(),
                 override fun onQueryTextChange(newText: String?): Boolean {
                     return false
                 }
-
             }
         )
+        buttonCurrentLocation.setOnClickListener {
+            getDeviceLocation(map!!)
+        }
+        buttonSavePostion.setOnClickListener {
+            Log.i("TAG", listLocationSelect.get(0).lat.toString())
+        }
     }
 
     override fun onMapReady(p0: GoogleMap?) {
@@ -125,6 +139,7 @@ class RegisterLocationFragment : Fragment(),
 
     private fun getDeviceLocation(map: GoogleMap) {
         try {
+            map.clear()
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient?.lastLocation
                 locationResult?.let { task ->
@@ -136,16 +151,24 @@ class RegisterLocationFragment : Fragment(),
                                     location.latitude,
                                     location.longitude
                                 )
+                                listLocationSelect.clear()
+                                listLocationSelect.add(
+                                    Location(
+                                        location.latitude,
+                                        location.latitude
+                                    )
+                                )
                                 map.addMarker(
                                     MarkerOptions()
                                         .position(currentPostion)
                                         .draggable(true)
                                         .title("Postion")
-                                        .snippet("Select postion services")
+                                        .snippet("Choose a location here")
                                 )
-                                map?.moveCamera(
+                                map?.animateCamera(
                                     CameraUpdateFactory.newLatLngZoom(
-                                        currentPostion, DEFAULT_ZOOM.toFloat()
+                                        currentPostion,
+                                        15f
                                     )
                                 )
                                 map.setOnMarkerDragListener(this)
@@ -160,7 +183,10 @@ class RegisterLocationFragment : Fragment(),
     }
 
     override fun onMarkerDragEnd(p0: Marker?) {
-        Log.i("TAG", p0?.position.toString())
+        listLocationSelect.clear()
+        p0?.let {
+            listLocationSelect.add(Location(p0.position.latitude, p0.position.longitude))
+        }
     }
 
     override fun onMarkerDragStart(p0: Marker?) {
