@@ -2,12 +2,15 @@ package com.example.sos__vn.screen.Register
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.sos__vn.R
@@ -22,11 +25,14 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+import kotlinx.android.synthetic.main.fragment_register_location.*
+import java.lang.Exception
 
 class RegisterLocationFragment : Fragment(),
     OnMapReadyCallback,
     GoogleMap.OnMarkerDragListener {
 
+    private var map: GoogleMap? = null
     private var placesClient: PlacesClient? = null
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var locationPermissionGranted: Boolean = false
@@ -50,7 +56,39 @@ class RegisterLocationFragment : Fragment(),
         mapFragment.getMapAsync(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchViewFindAddress.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    var location = searchViewFindAddress.query.toString()
+                    var listAdress = mutableListOf<Address>()
+                    if (location != null) {
+                        var geo = Geocoder(activity)
+                        try {
+                            listAdress = geo.getFromLocationName(location, 1)
+                            var address = listAdress.get(0)
+                            var latlng = LatLng(address.latitude, address.longitude)
+                            map?.addMarker(MarkerOptions().position(latlng).title("${location}"))
+                            map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 20f))
+
+                        } catch (e: Exception) {
+                            Log.i("TAG", e.toString())
+                        }
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+
+            }
+        )
+    }
+
     override fun onMapReady(p0: GoogleMap?) {
+        map = p0
         getLocationPermission()
         p0?.let { getDeviceLocation(p0) }
     }
@@ -86,7 +124,6 @@ class RegisterLocationFragment : Fragment(),
     }
 
     private fun getDeviceLocation(map: GoogleMap) {
-        map.mapType=GoogleMap.MAP_TYPE_HYBRID
         try {
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient?.lastLocation
