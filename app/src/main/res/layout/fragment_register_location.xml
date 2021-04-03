@@ -8,11 +8,21 @@
     android:longClickable="true"
     tools:context=".screen.Register.RegisterLocationFragment">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSelectPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="Select position of User"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchViewFindAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="@dimen/dp_36"
         android:background="@color/color_123"
         android:elevation="@dimen/dp_5"
         app:iconifiedByDefault="false"
@@ -21,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:queryBackground="@android:color/transparent"
-        app:queryHint="Search...." />
+        app:queryHint="@string/hint_search" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLine"
@@ -36,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_5"
-        app:layout_constraintBottom_toTopOf="@id/buttonCurrentLocation"
+        app:layout_constraintBottom_toTopOf="@id/buttonSavePostion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchViewFindAddress" />
@@ -45,17 +55,18 @@
         android:id="@+id/buttonCurrentLocation"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
         android:background="@drawable/ic_current_location"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapViewDragRetrieveLocation" />
 
     <Button
         android:id="@+id/buttonSavePostion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_save_postion"
         android:text="Save Postion"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
