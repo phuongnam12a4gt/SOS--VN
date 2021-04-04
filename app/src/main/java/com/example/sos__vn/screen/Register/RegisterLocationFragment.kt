@@ -182,6 +182,7 @@ class RegisterLocationFragment : Fragment(),
     }
 
     override fun onMarkerDragEnd(p0: Marker?) {
+        Log.i("TAG", p0?.position?.latitude.toString() + " " + p0?.position?.longitude.toString())
         listLocationSelect.clear()
         p0?.let {
             listLocationSelect.add(Location(p0.position.latitude, p0.position.longitude))
