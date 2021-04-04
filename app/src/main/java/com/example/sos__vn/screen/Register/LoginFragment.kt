@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sos__vn.R
-import com.example.sos__vn.screen.HomeActivity
+import com.example.sos__vn.screen.Home.HomeActivity
 import com.sun.americanroom.utils.replaceFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
             intent.putExtra("age", age)
             startActivity(intent)
         } else {
-            textViewNotify.visibility=View.VISIBLE
+            textViewNotify.visibility = View.VISIBLE
             textViewNotify.text = "Wrong name or wrong password"
         }
     }

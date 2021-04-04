@@ -20,7 +20,7 @@
 
         <activity android:name=".screen.Register.NavigateActivity" />
         <activity android:name=".screen.OnBoardingActivity" />
-        <activity android:name=".screen.HomeActivity" />
+        <activity android:name=".screen.Home.HomeActivity" />
         <activity android:name=".screen.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,8 +1,7 @@
-package com.example.sos__vn.screen
+package com.example.sos__vn.screen.Home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -10,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.sos__vn.R
 import com.google.android.material.navigation.NavigationView
+import com.sun.americanroom.utils.addFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -18,7 +18,9 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_modify)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        supportActionBar?.setTitle("Show surrounding services")
+        addFragment(SearchPlacesFragment.newInstances(), R.id.content_frame)
         nav_view.setNavigationItemSelectedListener(object :
             NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -30,13 +32,9 @@ class HomeActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerStateChanged(newState: Int) {
-                Toast.makeText(this@HomeActivity, "Trang thai ngan keo thay doi", Toast.LENGTH_LONG)
-                    .show()
             }
 
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                Toast.makeText(this@HomeActivity, "vi tri ngan keo thay doi", Toast.LENGTH_LONG)
-                    .show()
             }
 
             override fun onDrawerClosed(drawerView: View) {
@@ -47,7 +45,6 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this@HomeActivity, "Trang thai mo ngan keo", Toast.LENGTH_LONG)
                     .show()
             }
-
         })
     }
 
