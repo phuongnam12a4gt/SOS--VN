@@ -34,7 +34,7 @@ class SearchPlacesFragment : Fragment(),
     private var locationPermissionGranted: Boolean = false
     private var listUser = mutableListOf<User>()
     private var currentPosition = Location()
-    private val bankinh: Double = 1.0
+    private val bankinh: Double = 0.01
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +52,8 @@ class SearchPlacesFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var mapFragment = childFragmentManager
-            ?.findFragmentById(R.id.fragmentSearchPlaces) as SupportMapFragment
+        var mapFragment =
+            childFragmentManager?.findFragmentById(R.id.fragmentSearchPlaces) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -125,7 +125,6 @@ class SearchPlacesFragment : Fragment(),
                                 var location = it.result
                                 this.currentPosition =
                                     Location(location.latitude, location.longitude)
-                                Log.i("TAG", this.currentPosition.lat.toString())
                                 var currentPostion1 = LatLng(
                                     location.latitude,
                                     location.longitude
@@ -174,14 +173,6 @@ class SearchPlacesFragment : Fragment(),
                 }
             }
         }
-//     var current = LatLng(16.08063466358783,108.153489343822)
-//        map.addMarker(
-//            MarkerOptions()
-//                .position(current)
-//                .draggable(true)
-//                .title("Postion")
-//                .snippet("Choose a location here")
-//        )
     }
 
     companion object {
